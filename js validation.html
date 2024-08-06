@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <script>
+        function inputs() {
+            var username = document.querySelector("#username").value.trim();
+            var email = document.querySelector("#email").value.trim();
+            var phone = document.querySelector("#tele").value.trim();
+            var password = document.querySelector("#pass").value.trim();
+            var address = document.querySelector("#address").value.trim();
+            var select = document.querySelector("#select").value.trim();
+            var regEmail = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+            var regPhone = /^\d{10}$/;
+
+            if (username === "") {
+                alert("Please enter the name");
+                return false;
+            }
+            else if (address === "") {
+                alert("Please enter your address.");
+                return false;
+            }
+           else if (email === ""  ) {
+                alert("Please enter a e-mail address.");
+                return false;
+           }
+            else if(!regEmail.test(email) ) {
+                alert("Please enter a valid e-mail address.");
+                return false;
+                }
+              
+            
+            else if (password === "") {
+                alert("Please enter your password");
+                return false;
+            }
+           else if (password.length < 6) {
+                alert("Password should be at least 5 characters long");
+                return false;
+            }
+           else  if (phone === "" || !regPhone.test(phone)) {
+                alert("Please enter a valid phone number.");
+                return false;
+            }
+          else  if (select === "") {
+                alert("Please select your course.");
+                return false;
+            }
+            
+            return true;
+        }
+
+        
+        document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("#formm");
+    form.addEventListener("submit", function (e) {
+       
+        const isCorrect = inputs();
+        if (isCorrect) {
+            form.submit(); // If validation passes, submit the form
+            alert("The form is submitted successfully");
+            form.reset(); // Reset form after successful submission
+        } else {
+            e.preventDefault(); // Prevent form submission
+            // alert("Please fill out all fields");
+            console.log("formis prevented")
+        }
+    });
+});
+    </script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin: 0 auto;
+            width: 600px;
+        }
+
+        input[type="text"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        input[type="submit"]:hover,
+        input[type="reset"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>REGISTRATION FORM</h1>
+    <form name="RegForm" id="formm" method="">
+        <p>Name: <input type="text" id="username" name="Name" /></p>
+        <p>Address: <input type="text" id="address" name="Address" /></p>
+        <p>E-mail Address: <input type="text" id="email" name="EMail" /></p>
+        <p>Password: <input type="text" id="pass" name="Password" /></p>
+        <p>Telephone: <input type="text" id="tele" name="Telephone" /></p>
+        <p>SELECT YOUR COURSE
+            <select id="select" name="Subject">
+                <option value="">-- Select --</option>
+                <option value="BTECH">BTECH</option>
+                <option value="BBA">BBA</option>
+                <option value="BCA">BCA</option>
+                <option value="B.COM">B.COM</option>
+                <option value="KVCET">KVCET</option>
+            </select>
+        </p>
+        <p>Comments: <textarea cols="55" name="Comment"></textarea></p>
+        <p>
+            <input type="submit" value="Submit" name="Submit" />
+            <input type="reset" value="Reset" name="Reset" />
+        </p>
+    </form>
+</body>
+
+</html>

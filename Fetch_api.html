@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open-Source Data Display</title>
+    <style>
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 16px;
+            width: 300px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="cardsContainer"></div>
+
+<script>
+    fetch('https://api.thedogapi.com/v1/images/search?limit=5')
+    
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            const cardsContainer = document.getElementById('cardsContainer');
+
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+
+                card.innerHTML = `
+                <img src="${item.url}" alt="dog">;
+                                `;
+
+                cardsContainer.appendChild(card);
+            });
+        })
+        .catch(error => console.error('Error fetching data:', error));
+</script>
+
+</body>
+</html>
