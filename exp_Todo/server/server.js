@@ -52,3 +52,16 @@ app.delete('/todos/:id', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+
+
+//cd fsd-2
+//cd exp_todo
+// cd server
+// node server.js
+//open new terminal
+// cd fsd-2
+// cd exp_todo
+//cd todo_app
+//npm install
+//npm start

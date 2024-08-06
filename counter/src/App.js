@@ -33,3 +33,7 @@ function App() {
 }
 
 export default App;
+// cd fsd-2
+// cd counter
+//npm install
+//npm start 
