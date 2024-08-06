@@ -42,3 +42,8 @@ const PORT =3000;
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+
+// cd fsd-2
+// cd using_node_show_html
+// node server.js
