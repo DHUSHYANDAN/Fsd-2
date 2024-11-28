@@ -1,0 +1,22 @@
+from sklearn.metrics import confusion_matrix, accuracy_score, classification_report, roc_auc_score, log_loss
+
+X_actual = [1, 1, 0, 1, 0, 0, 1, 0, 0, 0]
+Y_predic = [1, 0, 1, 1, 1, 0, 1, 1, 0, 0]
+
+# Confusion Matrix
+results = confusion_matrix(X_actual, Y_predic)
+print('Confusion Matrix:')
+print(results)
+
+# Accuracy Score
+print('Accuracy Score is', accuracy_score(X_actual, Y_predic))
+
+# Classification Report
+print('Classification Report:')
+print(classification_report(X_actual, Y_predic))
+
+# AUC-ROC Score
+print('AUC-ROC:', roc_auc_score(X_actual, Y_predic))
+
+# Log Loss
+print('LOGLOSS Value is', log_loss(X_actual, Y_predic))
