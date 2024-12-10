@@ -1,0 +1,26 @@
+int led=12;
+int ldrsen=A0;
+void setup() {
+  Serial.begin(9600);
+  pinMode(led,OUTPUT);
+  pinMode(ldrsen,INPUT);
+
+}
+
+void loop() 
+{
+  int data=analogRead(ldrsen);
+  
+  int light = map(data, 0, 1023, 0, 50);
+  Serial.println(light);
+
+  if(light<=16)
+  {
+    digitalWrite(led,HIGH);
+  }
+  else
+  {
+    digitalWrite(led,LOW);
+  }
+  delay(1000);
+}
