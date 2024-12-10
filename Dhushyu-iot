@@ -1,0 +1,86 @@
+#include <ESP8266WiFi.h> // espressif modules
+#include <ESP8266HTTPClient.h>
+#include "DHT.h"  //humidity
+
+#define DHTPIN D1       // Pin connected to the DHT11 sensor
+#define DHTTYPE DHT11   // DHT 11 sensor type
+
+DHT dht(DHTPIN, DHTTYPE);
+
+// WiFi credentials
+const char* ssid = "POCO X3 Pro";  // Replace with your WiFi SSID  service set identifier
+const char* password = "dhushyu@1";  // Replace with your WiFi password
+
+// ThingSpeak API details
+const char* apiKey = "MLIGZVBDPZI89XLL";  // Your ThingSpeak API key
+const char* serverAddress = "https://api.thingspeak.com/channels/2781443/fields/1.json?api_key=MLIGZVBDPZI89XLL&results=2";  // ThingSpeak API endpoint
+
+void setup() {
+  // Initialize the DHT sensor
+  dht.begin();
+
+  // Start serial communication
+  Serial.begin(115200);
+
+  // Connect to WiFi
+  Serial.print("Connecting to WiFi...");
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(1000);
+    Serial.print(".");
+  }
+  Serial.println("\nConnected to WiFi!");
+}
+
+void loop() {
+  // Read temperature and humidity from DHT sensor
+  float humidity = dht.readHumidity();
+  float temperature = dht.readTemperature();
+
+  // Check if the readings are valid
+  if (isnan(humidity) || isnan(temperature)) {
+    Serial.println("Failed to read from DHT sensor!");
+    delay(2000);
+    return;
+  }
+
+  // Print readings to the Serial Monitor
+  Serial.print("Temperature: ");
+  Serial.print(temperature);
+  Serial.print("°C, Humidity: ");
+  Serial.print(humidity);
+  Serial.println("%");
+
+  // Send data to ThingSpeak
+  if (WiFi.status() == WL_CONNECTED) {
+    WiFiClient client;
+    HTTPClient http;
+
+    // Build the URL with parameters
+    String postData = String(serverAddress) + "?api_key=" + apiKey +
+                      "&field1=" + String(temperature) +
+                      "&field2=" + String(humidity);
+
+    http.begin(client, postData);
+    int httpCode = http.GET();  // Use GET request for ThingSpeak
+
+    // Handle the response
+    if (httpCode > 0) {
+      Serial.print("HTTP Response Code: ");
+      Serial.println(httpCode);
+      if (httpCode == 200) {
+        Serial.println("Data sent successfully!");
+      }
+    } else {
+      Serial.print("HTTP GET failed, error: ");
+      Serial.println(http.errorToString(httpCode).c_str());
+    }
+
+    http.end();  // Close the HTTP connection
+  } else {
+    Serial.println("WiFi not connected!");
+  }
+
+  delay(15000);  // Wait 15 seconds before sending the next update (ThingSpeak rate limit)
+}
+  `
